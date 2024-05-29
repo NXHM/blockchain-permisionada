@@ -97,6 +97,7 @@ std = [
 	"frame-try-runtime?/std",
 
 	"pallet-node-authorization/std",
+	
 	"pallet-aura/std",
 	"pallet-balances/std",
 	"pallet-grandpa/std",
