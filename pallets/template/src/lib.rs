@@ -73,6 +73,33 @@ pub mod pallet {
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
+	// Added by me following the rust documentation 
+	/*#[pallet::genesis_config]
+    #[derive(frame_support::DefaultNoBound)]
+    pub struct GenesisConfig<T: Config> {
+        //foo: Vec<T::AccountId>
+
+    }
+
+    #[pallet::genesis_build]
+    impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
+        fn build(&self) {
+            // use &self to access fields.
+            let foo = &self.foo;
+            todo!()
+        }
+    }*/
+	// Es de la guia
+	/* #[pallet::genesis_config]
+	#[derive(Default)]
+	pub struct GenesisConfig {
+		pub something: u32,
+	}
+	#[pallet::genesis_build]
+	impl<T: Config> GenesisBuild<T> for GenesisConfig {
+	   fn build(&self) { }
+	} */
+
 	/// The pallet's configuration trait.
 	///
 	/// All our types and constants a pallet depends on must be declared here.

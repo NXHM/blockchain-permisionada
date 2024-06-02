@@ -1,9 +1,12 @@
-use node_template_runtime::{AccountId, RuntimeGenesisConfig, Signature, WASM_BINARY};
+use node_template_runtime::{AccountId, RuntimeGenesisConfig, SystemConfig,BalancesConfig, AuraConfig, GrandpaConfig,WASM_BINARY, SudoConfig, NodeAuthorizationConfig}; // The genesis config that serves the pallet. I added nodeAuthorization
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
-use sp_core::{sr25519, Pair, Public};
+use sp_core::{sr25519, Pair, Public, OpaquePeerId}; // A struct wraps Vec<u8> to represent the node `PeerId`. I added OpaquePeerId
 use sp_runtime::traits::{IdentifyAccount, Verify};
+
+//use sp_core::OpaquePeerId; // A struct wraps Vec<u8> to represent the node `PeerId`.
+//use node_template_runtime::NodeAuthorizationConfig; // The genesis config that serves the pallet.
 
 // The URL for the telemetry server.
 // const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
@@ -93,11 +96,49 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 
 /// Configure initial storage state for FRAME modules.
 fn testnet_genesis(
+	wasm_binary: &[u8],
 	initial_authorities: Vec<(AuraId, GrandpaId)>,
 	root_key: AccountId,
 	endowed_accounts: Vec<AccountId>,
 	_enable_println: bool,
-) -> serde_json::Value {
+) -> GenesisConfig {
+    GenesisConfig {
+        /*system: SystemConfig {
+            // Add Wasm runtime to storage.
+            code: wasm_binary.to_vec(),
+        },*/
+        balances: BalancesConfig {
+            // Configure endowed accounts with initial balance of 1 << 60.
+            balances: endowed_accounts.iter().cloned().map(|k| (k, 1 << 60)).collect(),
+        },
+        aura: AuraConfig {
+            authorities: initial_authorities.iter().map(|x| (x.0.clone())).collect(),
+        },
+        grandpa: GrandpaConfig {
+            authorities: initial_authorities.iter().map(|x| (x.1.clone(), 1)).collect(),
+        },
+        sudo: SudoConfig {
+            // Assign network admin rights.
+            key: Some(root_key),
+        },
+        node_authorization: NodeAuthorizationConfig {
+			nodes: vec![
+			  (
+				OpaquePeerId(bs58::decode("12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2").into_vec().unwrap()),
+				endowed_accounts[0].clone()
+			  ),
+			  (
+				OpaquePeerId(bs58::decode("12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust").into_vec().unwrap()),
+				endowed_accounts[1].clone()
+			  ),
+			],
+		  },
+    }
+}
+
+
+
+/*serde_json::Value {
 	serde_json::json!({
 		"balances": {
 			// Configure endowed accounts with initial balance of 1 << 60.
@@ -113,5 +154,6 @@ fn testnet_genesis(
 			// Assign network admin rights.
 			"key": Some(root_key),
 		},
+		
 	})
-}
+}*/
