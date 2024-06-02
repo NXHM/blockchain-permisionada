@@ -314,8 +314,8 @@ mod runtime {
 	pub type TemplateModule = pallet_template;
 
 	// Adición de runtime
-	//#[runtime::pallet_index(8)]
-	//pub type NodeAuthorization = pallet_node_authorization;
+	#[runtime::pallet_index(8)]
+	pub type NodeAuthorization = pallet_node_authorization;
 }
 
 /// The address format for describing accounts.
@@ -611,12 +611,12 @@ impl_runtime_apis! {
 	}
 }
 
-construct_runtime!(
-	pub enum Runtime where
-		Block = Block,
-		NodeBlock = opaque::Block,
-		UncheckedExtrinsic = UncheckedExtrinsic
-		{
-		NodeAuthorization: pallet_node_authorization::{Pallet, Call, Storage, Event<T>, Config<T>},
-		}
-	);
+// construct_runtime!(
+// 	pub enum Runtime where
+// 		Block = Block,
+// 		NodeBlock = opaque::Block,
+// 		UncheckedExtrinsic = UncheckedExtrinsic
+// 		{
+// 		NodeAuthorization: pallet_node_authorization::{Pallet, Call, Storage, Event<T>, Config<T>},
+// 		}
+// 	);
