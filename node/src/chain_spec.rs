@@ -1,4 +1,4 @@
-use node_template_runtime::{AccountId, RuntimeGenesisConfig, SystemConfig,BalancesConfig, AuraConfig, GrandpaConfig,WASM_BINARY, SudoConfig, NodeAuthorizationConfig}; // The genesis config that serves the pallet. I added nodeAuthorization
+use node_template_runtime::{AccountId, RuntimeGenesisConfig, BalancesConfig, AuraConfig, GrandpaConfig,WASM_BINARY, SudoConfig, Signature ,NodeAuthorizationConfig}; // The genesis config that serves the pallet. I added nodeAuthorization and quit SystemConfig,
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
@@ -96,7 +96,7 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 
 /// Configure initial storage state for FRAME modules.
 fn testnet_genesis(
-	wasm_binary: &[u8],
+	//wasm_binary: &[u8],
 	initial_authorities: Vec<(AuraId, GrandpaId)>,
 	root_key: AccountId,
 	endowed_accounts: Vec<AccountId>,
