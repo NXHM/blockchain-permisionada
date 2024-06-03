@@ -74,7 +74,8 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	// Added by me following the rust documentation 
-	/*#[pallet::genesis_config]
+	/* ****
+	#[pallet::genesis_config]
     #[derive(frame_support::DefaultNoBound)]
     pub struct GenesisConfig<T: Config> {
         //foo: Vec<T::AccountId>
@@ -85,10 +86,11 @@ pub mod pallet {
     impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
         fn build(&self) {
             // use &self to access fields.
-            let foo = &self.foo;
+            //let foo = &self.foo;
             todo!()
         }
-    }*/
+    }
+	*/
 	// Es de la guia
 	/* #[pallet::genesis_config]
 	#[derive(Default)]

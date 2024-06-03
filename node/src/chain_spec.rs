@@ -101,44 +101,7 @@ fn testnet_genesis(
 	root_key: AccountId,
 	endowed_accounts: Vec<AccountId>,
 	_enable_println: bool,
-) -> GenesisConfig {
-    GenesisConfig {
-        /*system: SystemConfig {
-            // Add Wasm runtime to storage.
-            code: wasm_binary.to_vec(),
-        },*/
-        balances: BalancesConfig {
-            // Configure endowed accounts with initial balance of 1 << 60.
-            balances: endowed_accounts.iter().cloned().map(|k| (k, 1 << 60)).collect(),
-        },
-        aura: AuraConfig {
-            authorities: initial_authorities.iter().map(|x| (x.0.clone())).collect(),
-        },
-        grandpa: GrandpaConfig {
-            authorities: initial_authorities.iter().map(|x| (x.1.clone(), 1)).collect(),
-        },
-        sudo: SudoConfig {
-            // Assign network admin rights.
-            key: Some(root_key),
-        },
-        node_authorization: NodeAuthorizationConfig {
-			nodes: vec![
-			  (
-				OpaquePeerId(bs58::decode("12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2").into_vec().unwrap()),
-				endowed_accounts[0].clone()
-			  ),
-			  (
-				OpaquePeerId(bs58::decode("12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust").into_vec().unwrap()),
-				endowed_accounts[1].clone()
-			  ),
-			],
-		  },
-    }
-}
-
-
-
-/*serde_json::Value {
+) ->serde_json::Value {
 	serde_json::json!({
 		"balances": {
 			// Configure endowed accounts with initial balance of 1 << 60.
@@ -154,6 +117,90 @@ fn testnet_genesis(
 			// Assign network admin rights.
 			"key": Some(root_key),
 		},
+		"node_authorization":{
+			"nodes": vec![
+				(
+				  OpaquePeerId(bs58::decode("12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2").into_vec().unwrap()),
+				  endowed_accounts[0].clone()
+				),
+				(
+				  OpaquePeerId(bs58::decode("12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust").into_vec().unwrap()),
+				  endowed_accounts[1].clone()
+				),
+			  ],
+		}
 		
 	})
-}*/
+}
+
+
+// GenesisConfig {
+//     GenesisConfig {
+//         system: SystemConfig {
+//             // Add Wasm runtime to storage.
+//             code: wasm_binary.to_vec(),
+//         },
+//         balances: BalancesConfig {
+//             // Configure endowed accounts with initial balance of 1 << 60.
+//             balances: endowed_accounts.iter().cloned().map(|k| (k, 1 << 60)).collect(),
+//         },
+//         aura: AuraConfig {
+//             authorities: initial_authorities.iter().map(|x| (x.0.clone())).collect(),
+//         },
+//         grandpa: GrandpaConfig {
+//             authorities: initial_authorities.iter().map(|x| (x.1.clone(), 1)).collect(),
+// 			//initial_authorities.iter().map(|x| (x.1.clone(), 1)).collect::<Vec<_>>()
+//         },
+//         sudo: SudoConfig {
+//             // Assign network admin rights.
+//             key: Some(root_key),
+//         },
+//         node_authorization: NodeAuthorizationConfig {
+// 			nodes: vec![
+// 			  (
+// 				OpaquePeerId(bs58::decode("12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2").into_vec().unwrap()),
+// 				endowed_accounts[0].clone()
+// 			  ),
+// 			  (
+// 				OpaquePeerId(bs58::decode("12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust").into_vec().unwrap()),
+// 				endowed_accounts[1].clone()
+// 			  ),
+// 			],
+// 		},
+//     }
+// }
+
+
+/*
+->serde_json::Value {
+	serde_json::json!({
+		"balances": {
+			// Configure endowed accounts with initial balance of 1 << 60.
+			"balances": endowed_accounts.iter().cloned().map(|k| (k, 1u64 << 60)).collect::<Vec<_>>(),
+		},
+		"aura": {
+			"authorities": initial_authorities.iter().map(|x| (x.0.clone())).collect::<Vec<_>>(),
+		},
+		"grandpa": {
+			"authorities": initial_authorities.iter().map(|x| (x.1.clone(), 1)).collect::<Vec<_>>(),
+		},
+		"sudo": {
+			// Assign network admin rights.
+			"key": Some(root_key),
+		},
+		"node_authorization":{
+			"nodes": vec![
+				(
+				  OpaquePeerId(bs58::decode("12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2").into_vec().unwrap()),
+				  endowed_accounts[0].clone()
+				),
+				(
+				  OpaquePeerId(bs58::decode("12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust").into_vec().unwrap()),
+				  endowed_accounts[1].clone()
+				),
+			  ],
+		}
+		
+	})
+}
+*/
