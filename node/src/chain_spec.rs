@@ -1,4 +1,5 @@
-use node_template_runtime::{AccountId, RuntimeGenesisConfig, BalancesConfig, AuraConfig, GrandpaConfig,WASM_BINARY, SudoConfig, Signature ,NodeAuthorizationConfig}; // The genesis config that serves the pallet. I added nodeAuthorization and quit SystemConfig,
+//use node_template_runtime::{AccountId, RuntimeGenesisConfig, BalancesConfig, AuraConfig, GrandpaConfig,WASM_BINARY, SudoConfig, Signature ,NodeAuthorizationConfig}; // The genesis config that serves the pallet. I added nodeAuthorization and quit SystemConfig,
+use node_template_runtime::{AccountId, RuntimeGenesisConfig,WASM_BINARY, Signature }; // The genesis config that serves the pallet. I added nodeAuthorization and quit SystemConfig,
 use sc_service::ChainType;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
@@ -117,16 +118,24 @@ fn testnet_genesis(
 			// Assign network admin rights.
 			"key": Some(root_key),
 		},
-		"node_authorization":{
+		"nodeAuthorization":{//Había probado con node_authorization
 			"nodes": vec![
-				(
+				(//Alice
 				  OpaquePeerId(bs58::decode("12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2").into_vec().unwrap()),
 				  endowed_accounts[0].clone()
 				),
-				(
+				(//Bob
 				  OpaquePeerId(bs58::decode("12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust").into_vec().unwrap()),
 				  endowed_accounts[1].clone()
 				),
+				/*(//Charlie - no me marco error cuando lo coloque tal cual, cuando repeti Bob con un endowed_accounts distinto
+					OpaquePeerId(bs58::decode("12D3KooWJvyP3VJYymTqG7eH4PM5rN4T2agk5cdNCfNymAqwqcvZ").into_vec().unwrap()),
+					endowed_accounts[2].clone()
+				),
+				(//Dave
+					OpaquePeerId(bs58::decode("12D3KooWPHWFrfaJzxPnqnAYAoRUyAHHKqACmEycGTVmeVhQYuZN").into_vec().unwrap()),
+					endowed_accounts[3].clone()
+				),*/
 			  ],
 		}
 		
